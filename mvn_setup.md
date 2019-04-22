@@ -54,6 +54,18 @@ Setup Nexus
 - sudo service nexus restart
 
 
+windows for Nexus 2.x
+- Download the tar file
+- unzip
+- run cmd as administrator
+- >nexus.bat install
+- >nexus.bat start
+- browser http://localhost:8081/nexus
+- login: admin -->admin123
+- repository ===> snapshot, releases
+
+
+
 
 
 
