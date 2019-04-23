@@ -1,0 +1,404 @@
+In the beginning, there was no git.
+
+Version Control System
+    - Local Version Control System: Each Client has its own version, very difficult to manage, e.g, RCS
+    - Central Version Control System: suffer from single point failure issue, e.g., CVS, Subversion, Perforce
+    - Distributed Version Control System: Git, Mercurial, Bazaar or Darcs
+
+History of Git
+  1991 - 2002 Linux kernel maintain changes by pathces and archived files
+  2002 - 2005    Linux kernel project began using a proprietary DVCS called BitKeeper
+  2005        the relationship between the community that developed the Linux kernel and the commercial company that
+              developed BitKeeper broke down, and the tool's free-of-charge status was revoked, prompted the Linux
+              community in particular Linus Torvalds to develop their own tool based on some of the lessons they learned
+              while using BitKeeper.
+
+Major Difference
+  Most other systems store information as a list of file-based changes(CVS, Subversion, Perforce, Bazaar, etc). They store
+  a set of files and the changes made to each file over time.
+  Git is DIFFERENT! Git thinks of its data more like a series of snapshots of a miniature filesystem. Everytime you commit,
+  or save the state of your project, Git basically take a picture of what all you files look like at that moment and store a
+  reference to that snapshot. To be efficient, if files have not changed, Git does not store the file again, just a link to
+  the previous identical file it has already stored.
+
+Git has integrity
+  Everything in Git is checksummed before it is stored and is then referred to by that checksum. This means it's impossible
+  to change the contents of any file or directory without Git kowning about it.
+  SHA-1 is the hash algorithm.
+
+Three states of a file in Git: committed, modified, and staged 
+  Committed: the data is safely stored in your local database ===>.git directory(Repository local)
+  Modified: you have changed the file but have not committed it to your database yet. ===>Working directory
+  Staged: you have marked a modified file in its current version to go into your next commit snapshot ===>Staging Area
+  
+Install git
+  Linux RPM-based Distribution: RHEL, Centos or Fedora
+    $sudo dnf install git-all
+  Linux Debian-based: Ubuntu
+    $sudo apt install git-all
+  
+  MacOS -->Download an installer, use double click and next
+  Windows --> Same as MacOS
+  
+Git configuration
+  /etc/gitconfig: contains values applied to every user on the system and all their repositories. If you pass the option
+      --system to $git config, it reads from and writes to this file specifically.
+  ~/.gitconfig || ~/.config/git/config: value specific personally to you, the current user. You can make Git read from and
+      and write to this file by passing the --global option, and this affects all of the repositories you work with on your
+      system.
+  config file in the Git directory (that is .git/config) of whatever repository you are currently using: specific to that
+      single repository. You can force Git to read from and write to this file with the --local option, but that is in fact
+      the default.
+  On Windows systems, Git looks for the .gitconfig file in the $HOME directory(C:\Users\$USER for most people). It also still
+      looks for /etc/gitconfig, although it is relative to the MSys root which is whereever you decide to install Git on your
+      Windows system when you run the installer.
+      
+      You can view all of your settings and where they are coming from using the following command:
+      $git config --list --show-origin
+      How to set your username and email:
+      $git config --global user.name "firstname lastname"
+      $git config --global user.email "your_email@example.com"
+      You may change the username and email for specific project by the same two commands without the --global option
+      Set up the text editor, such as emacs:
+      $git config --global core.editor emacs
+      $git config --global core.editor "'C:/Program Files/Notepad++/notepad++.exe' -multiInst -nosession" <=== on windows
+      
+Get help for git
+  $git help <verb>  ==>$git help config
+  $git <verb> -h | --help   ==>$git add -h
+  $man git-<verb>
+
+Ignoring Files
+  You will have a class of files that you do not want Git to automatically add or even show you as being untracked, such
+  as log files or files produced by your build system. In such cases, you can create a file listing patterns to match them
+  named .gitignore.
+  How to config .gitignore?
+  
+Compare files
+  $git diff  ==> to see what you have changed but not yet staged. It compares what is in your working directory with what
+                 is in your staging area. The result tells you the changes you have made that you have not yet staged.
+       options:
+          --cached:
+          --staged:
+
+Start tracking files
+  $git add
+      Options:
+          .: add all your changes
+          file_name:
+
+Check the status of your working directory
+  $git status
+      options:
+        -s: short version of the description
+
+Commit files: git commit
+  By typing $git commit, without anyother directions, the command line will prompt your text editor to ask for message about
+  this commit.
+  $git commit
+  You can issue the option '-m' to add a message in command and bypass the editor
+  $git commit -m 'your_message'
+  Options:
+    -m: indicating a message is following
+    -a: skip the step of staging area, directly commit ALL of your changes in working area to 
+  
+Remove files from git staging area
+  $git rm
+  If you modified the file or had already added it to the staging area, you must force the removal with -f flag.
+  $git rm -f your_file  ===> what you did is basically delete that file. File is gone!
+  If you want to keep the file in your working directory but remove it from your staging area, i.e., you want to keep the file
+  on your hard drive but not have Git track it anynore, use --cached flag
+  $git rm --cached file_name  ==>regular expression is acceptable: log/\*.log
+  
+Rename files
+  $git mv f_name_o f_name_new
+  
+Check commit history
+  $git log
+  Options:
+    -p, --patch: show the patch introduced in each commit
+    -aNumber: show only the last aNumber entries
+    --name-only: Show the list of files modified after the commit information
+    --name-status: Show the list of files affected with added/modified/deleted information as well
+    --abbrev-commit: show only the first few characters of the SHA-1 checksum instead of all 40
+    --decorate:
+    --relative-date: diplay the date in a relative format(e.g., '2 weeks ago') in stead of the full date format
+    --stat: show abbreviated stats for each commit
+    --shortstat: Display only the changed/insertions/deletions line from the --stat command
+    --since, --after:    $git log --since=2.weeks | '2018-01-15' | '2 years 1 day 3 minutes ago'
+    --until, --before:    $git log --until=
+    -S function_name: find the last commit that added or removed a reference to a specific function
+    --author: filter on a specific author
+    --commiter:
+    --grep: search for keywords in the commit messages
+    --graph: show graph version of the commit history
+    --pretty[=option]: changes the log output to formats other than the default.
+          option:
+          oneline: each commit on a single line
+          short | full | fuller: show the output in roughly the same format but with less or more information
+          format defined by yourself:
+              $git log --pretty="%h - %s" . <--- Not support by Mac
+    e.g.          
+    $git log --pretty='%h - %s' --author='frank' --since='2018-10-01' --before='2018-12-29' --no-merges
+    
+    git log' by default shows the logs for the branch on which you are currently. If you want to see logs on another
+    branch, use the following command:
+    $git log branch_name --oneline
+
+Undoing things
+  At any stage, you may want to undo something. Here, we'll review a few basic tools for undoing changes that you've made.
+  Be careful, because you can NOT always undo some of these undos. This is one of the few areas in Git where you may lose
+  some work if you do it wrong.
+  One of the common undos takes place when you commit too early and possibly forget to add some files, or you mess up your
+  commit message. If you want to redo that commit, make the additional changes you forgot, stage them, and commit again,
+  use the --amend option
+  $git commit -amend
+  This command takes your staging area and uses it for the commit. If you have made no changes since your last commit(for
+  instance, you run this command right after your previous commit command), then your snapshot will look exactly the same,
+  and all you will change is your commit message.
+  
+Unstaging a staged file
+  $git reset HEAD file_name
+  
+Give up changes made to certain files
+  $git checkout -- <file_name...>     ===> a dangerous command! Any local changes made to that file are gone!
+  
+Showing your remotes  
+  Clone the remote repository
+  $git clone https://github.com/scharcon/tgit
+  Adding remote repo: ==> git remote add <shortname> <url>
+  $git remote add pb https://github.com/paulbone/tgit
+  
+  $git remote
+  $git remote -v
+  Clone the 
+
+Fetching and Pulling from remotes
+  $git fetch <remote>   ==>fetch any new work that has been pushed to that server since you cloned(or last fetched from) it.
+                           Note: only download the data to your local repository, but NOT merge it with any of your work or
+                           modify what you are currently working on. You have to merge it mannually into your work when you
+                           are ready.
+  $git pull <remote>    ==>automatically fetch and then merge that remote branch into your
+ 
+Push your work to your remote
+  git push <remote> <branch>
+  $git push origin master
+ 
+Inspecting a remote
+  git remote show <remote>
+  $git remoget show origin
+
+Renaming and removing remotes
+  git remote rename
+  $git remote rename pb paul ==>rename pb to paul
+  git remote remove | git remote rm
+  $git remote remove paul
+  
+Tagging
+  List the tags
+    $git tag  ==>list tags in alphbetic orders
+    $git tag -l "v1.8.5*"   ==>list tags within 1.8,5 series
+      Note: if you are applying a wildcard pattern to match tag names, the use of -l or --list is mandatory
+  
+  Creating Tags
+    Git supports two types of tags: lightweight and annotated
+    A lightweight tag is very much like a branch that doesn’t change — it’s just a pointer to a specific commit.
+    Annotated tags, however, are stored as full objects in the Git database. They’re checksummed; contain the tagger 
+    name, email, and date; have a tagging message; and can be signed and verified with GNU Privacy Guard (GPG). 
+    Create annotated tags: -a
+    $git tag -a v1.4 -m 'my version 1.4'  ==>-m: specify a tagging message which is stored with the tag
+    $git show v1.4    ==>show the tag along with the commit that was tagged
+    
+    Create lightweight tags
+    $git tag v1.4-lw
+    
+    Create tag referring to historic commit
+    $git tag -a v1.2.x sha1_ref_no
+    
+  Sharing tags
+    git push origin <tag_name>
+    $git push origin v1.4-lw    ==>push only v1.4-lw
+    $git push origin --tags   ==>push all of the tags
+  
+  Deleting Tags
+    git tag -d <tagname>
+    $git tag -d v1.4-lw   ==>this will delete the tag: v1.4-lw, but this only happens to your local
+    Two ways to push the changes to remote repo
+    $git push origin :refs/tags/v1.4-lw
+    $git push origin --delete v1.4
+    
+  Checking out tags
+    If you want to view the version of files a tag is pointing to....  This will put your repository in 'detached HEAD' state
+    $git checkout your_verion_number
+    Note: your changes won't be reachable unless using the exact commit hash. If you want to keep the changes(fixing a but...)
+    you will generally want to create a branch
+    $git checkout -b version2 v2.0.0    ==> be careful, if commits are made to version2, it will be different from v2.0.0
+    
+
+Branching
+  git branch
+    Options
+      -b: create a branch and switch to it
+      -d: delete a branch
+      -v: show details about local branches
+      --merged:
+      --no-merged:
+  Create a new branch
+    $git branch b_name    ==>new branch was created, but you are still on (HEAD pointing to) where you were. No switch yet! 
+  
+  Push the new branch to remote repo
+    $git push origin new_branch_name
+    $git push origin --set-upstream new_branch_name
+    
+  Switch branch
+    $git checkout b_name  ==>HEAD pointing to b_name, you are on that branch now
+  
+  Create and swith at the same time
+    $git checkout -b b_name
+    
+    $git log --oneline --decorate --graph --all   ==>will print out the history of your commmits, showing where your branch
+          pointers are and how your history has diverged.
+  
+  Merge branch    
+    Fast-forward
+    $git checkout master
+    $git merge b_name   ===>fast forward merge, since there is no diverged files
+    Three-way
+    $git checkout -b featureA   ===>some commits made
+    $git checkout master
+    $git checkout -b hotfix   ==>some works
+    $git checkout master
+    $git merge hotfix
+    $git branch -d hotfix
+    ===>here, master has work featureA does not contain -->diverged
+    $git merge featureA   ==>three-way merge --->snapshot of master and snapshot of featrueA were compared and create a new 
+                             commit
+    If the same file were modified at two separate branch, there will be a merge conflicts. Git hasn’t automatically created 
+    a new merge commit. It has paused the process while you resolve the conflict. If you want to see which files are unmerged 
+    at any point after a merge conflict, you can run git status---> Anything that has merge conflicts and has not been resolved
+    is listed as unmerged.
+    <<<<<<HEAD:xxxx
+    ========= -->above this line shows the contents from master branch, below this line shows the contents in featureA
+    >>>>>>>>>featureA:xxxx
+    If you run $git status, you will see the info about unmerged paths.
+    At this stage, you have two choice: 1. Give up the merge: $git merge --abort.   2. Mannually fix it: Accept one or mix
+    Then, run command $git add | git commit -a -m 'fix conflicts'   
+    
+  Delete the hotfix branch
+    $git branch -d b_name
+
+Rebase
+  If the same file has been modified in different branches, rebase may have conflicts and failed! Mannually fix it OR abort
+  Abort the rebase
+  $git rebase --abort
+  Mannually fix
+  show the conflicts
+  $git am --show-current-patch  ==>this will show where the conflicts occurs.
+  $git add .
+  $git commit -m 'fix conflicts'
+  $git branch     ===> will show *(no branch, rebasing nbm(which is the branch you are currently on)
+  $git push origin HEAD:your_target_branch_name     ===>here is 'master'
+  
+  
+  Do not rebase commits that exist outside your repository and people may have based work on them. 
+  If you follow that guideline, you’ll be fine. If you don’t, people will hate you, and you’ll be scorned by friends and 
+  family. When you rebase stuff, you’re abandoning existing commits and creating new ones that are similar but different. 
+  If you push commits somewhere and others pull them down and base work on them, and then you rewrite those commits with 
+  git rebase and push them up again, your collaborators will have to re-merge their work and things will get messy when 
+  you try to pull their work back into yours.
+  In general the way to get the best of both worlds is to rebase local changes you’ve made but haven’t shared yet before 
+  you push them in order to clean up your story, but never rebase anything you’ve pushed somewhere.
+
+SSH key
+  SSH keys are stored in ~/.ssh directory: id_dsa or id_rsa with a .pub extension. The .pub file is your public key, and
+  the other file is the corresponding private key.
+  If you do NOT have these files, you can create them by running a program called ssh-keygen, which is provided with the
+  SSH package on Linux/macOS system and comes with Git for Windows
+  $ssh-keygen -o
+    Generating public/private rsa key pair.
+    Enter file in which to save the key (/home/schacon/.ssh/id_rsa):  <---input where to store the key, default to braces file
+    Created directory '/home/schacon/.ssh'
+    Enter passphrase (empty for no passphrase): <---the password for this key, you can leave it blank
+    Enter same passphrase again:
+    Your identification has been saved in /home/schacon/.ssh/id_rsa.
+    Your public key has been saved in /home/schacon/.ssh/id_rsa.pub.
+    The key fingerprint is:
+    d0:82:24:8e:d7:f1:bb:9b:33:53:96:93:49:da:9b:e3 schacon@mylaptop.local
+  
+  config git server
+    $ sudo adduser git
+    $ su git
+    $ cd
+    $ mkdir .ssh && chmod 700 .ssh
+    $ touch .ssh/authorized_keys && chmod 600 .ssh/authorized_keys
+  add personal public key
+    $ cat /tmp/id_rsa.john.pub >> ~/.ssh/authorized_keys
+    $ cat /tmp/id_rsa.josie.pub >> ~/.ssh/authorized_keys
+    $ cat /tmp/id_rsa.jessica.pub >> ~/.ssh/authorized_keys
+  set up an empty repository for them
+    $ cd /srv/git
+    $ mkdir project.git
+    $ cd project.git
+    $ git init --bare
+    Initialized empty Git repository in /srv/git/project.git/
+    
+    Then, John, Josie, or Jessica can push the first version of their project into that repository by adding it as a 
+    remote and pushing up a branch. Note that someone must shell onto the machine and create a bare repository every 
+    time you want to add a project
+  Now, the users can access the server with normal shell and do a lot of stuff. Limit the user by setting login shell
+  to git-shell
+    $ cat /etc/shells # see if `git-shell` is already in there. If not...
+    $ which git-shell # make sure git-shell is installed on your system.
+    $ sudo -e /etc/shells # and add the path to git-shell from last command
+    $ sudo chsh git -s $(which git-shell)
+    
+    Now, the git user can only use the SSH connection to push and pull Git repositories and can’t shell onto the machine. 
+    If you try, you’ll see a login rejection
+    $ ssh git@gitserver
+      fatal: Interactive git shell is not enabled.
+      hint: ~/git-shell-commands should exist and have read and execute access.
+      Connection to gitserver closed.
+
+
+Stashing and cleaning
+  you’ve been working on part of your project, things are in a messy state and you want to switch branches for a bit to 
+  work on something else. The problem is, you don’t want to do a commit of half-done work just so you can get back to 
+  this point later. The answer to this issue is the git stash command.
+  Stashing takes the dirty state of your working directory — that is, your modified tracked files and staged changes — 
+  and saves it on a stack of unfinished changes that you can reapply at any time (even on a different branch).
+  
+  Save your current changes to the stash stack
+  $git stash  || git stash push
+  To see which stashes you have stored, use git stash list
+  $git stash list
+  To apply one stash from the stash list
+  $git stash apply stash@{aNumber}  <==by default, it will take the most recent stash if no specification made
+  $git stash apply --index
+  
+  Drop a stash
+  $git stash drop stash@{aNumber}
+  
+  
+
+git reset
+
+
+git rebase
+
+
+git revert
+
+git rerere
+
+
+git submodule
+  git submodule init
+  git submodule add
+  git submodule update
+  OR
+  git clone --recurse-submodules repo_url
+  
+
+
+
+
