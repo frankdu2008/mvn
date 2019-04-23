@@ -286,6 +286,13 @@ Branching
     
   Delete the hotfix branch
     $git branch -d b_name
+    
+  
+  if you accidentally delete one of your local branch, you can resume it(this including the master branch)...
+  $git branch -D br_name
+  $git branch br_name
+  $git branch -u origin/br_name
+  $git pull
 
 Rebase
   If the same file has been modified in different branches, rebase may have conflicts and failed! Mannually fix it OR abort
