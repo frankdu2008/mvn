@@ -23,3 +23,27 @@
      instantclient-basic-windows.x64-12.1.0.2.0.zip (72,416,242 bytes) (cksum - 1751087003)
 
 安装 ubuntu 16.04 服务器版到 VM 虚拟机， 该版本自带了 postgresql
+
+
+
+
+
+https://knowledgebase.progress.com/articles/Article/Specified-driver-could-not-be-loaded-due-to-system-error-182-using-the-64-bit-SequeLink-ODBC-client-with-Informatica-PowerCenter
+Question/Problem Description	
+"Specified driver could not be loaded due to system error 182" using the 64-bit SequeLink ODBC client with Informatica PowerCenter
+
+Clarifying Information	
+The error does not occur when using the SequeLink ODBC Client to connect with any other ODBC application other than Informatica PowerCenter. The error appears only when using it with Informatica PowerCenter.
+
+Error Message	Error connecting to database [ 
+Specified driver could not be loaded due to system error 182: (DataDirect SequeLink 6.0, C:\Program Files\DataDirect\slodbc60\dwslk22.dll). 
+Database driver error... 
+Function Name : Connect 
+Database driver error... 
+Function Name : Connect 
+Database Error: Failed to connect to database using user [test] and connection string [TEST]
+
+Resolution	
+Replacing the DLLs libeay32.dll, ssleay32.dll and icuuc34.dll from the SequeLink ODBC client location into INFA_HOME/server/bin resolved the issue.
+
+
