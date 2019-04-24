@@ -1,8 +1,16 @@
-下载 postgresql ODBC 
-  https://www.postgresql.org/ftp/odbc/versions/msi/
-  最新 64 位版
-解压
-点击安装就行了
+  安装 ERStudio Data Architecture
+  
+  配置 Postgresql 驱动
+    下载 postgresql ODBC 
+      https://www.postgresql.org/ftp/odbc/versions/msi/
+      最新 64 位版
+    解压
+    点击安装就行了
+
+  复制C:\psqlODBC\1100\bin 下的 LIBEAY32.dll 和 SSLEAY32.dll 到 C:\Program Files\IDERA\ERStudio Data Architect 18.0 下，
+  覆盖掉已经存在的文件即可
+
+
 
 //不是这个错了，只有一个jar
 #下载 Oracle JDBC 驱动
