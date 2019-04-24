@@ -11,18 +11,31 @@
   覆盖掉已经存在的文件即可
 
 
+  配置 Oracle ODBC 驱动
+    - 下载Oracle instant client basic package 和 Oracle ODBC 
+        文件名称：instantclient-basic-windows.x64-12.2.0.1.0 和 instantclient-odbc-windows.x64-12.2.0.1.0-2
+    - 把这两个文件放到同一个文件夹（务必如此）：Extract Here
+        C:\oracleODBC
+    - 解压次序很重要！务必先解压 instantclient-basic-windows.x64-12.2.0.1.0， 然后再解压 instantclient-odbc-windows.x64-12.2.0.1.0-2
+    - 进入 C:\oracleODBC\instantclient_12_2，双击运行 odbc_install
+    网络上说要配置环境变量，但是貌似不配，也没问题
+    如果要陪的话，配方如下
+    
+    An ODBC application has to load the Oracle Instant Client ODBC driver's shared library file (see next section) to connect to
+    Oracle Database. On Linux/Unix the directory path of the shared library should be set in the environment variable LD_LIBRARY_PATH, 
+    or platform equivalent. It can also be configured in /etc/ld.so.conf. On Windows it should be set in the PATH environment variable.
+    Refer to the topics Environment Variables for OCI Instant Client and Database Connection Strings for OCI Instant Client in the 
+    Oracle Call Interface Programmer's Guide for setting up the Database Connection string and related environment variables like 
+    TNS_ADMIN, TWO_TASK, LOCAL etc.
 
-//不是这个错了，只有一个jar
-#下载 Oracle JDBC 驱动
-#  https://www.oracle.com/technetwork/database/features/jdbc/default-2280470.html
-#  Oracle Database 12.1.0.2 JDBC Driver & UCP Downloads -->Zipped JDBC Driver and Companion JARs --->你需要有oracle账号，登录后才让你下载
-下载 oracle instant client
-  https://www.oracle.com/technetwork/topics/winx64soft-089540.html
-  选择 12.0.2
-  	Instant Client Package - Basic: All files required to run OCI, OCCI, and JDBC-OCI applications
-     instantclient-basic-windows.x64-12.1.0.2.0.zip (72,416,242 bytes) (cksum - 1751087003)
 
-安装 ubuntu 16.04 服务器版到 VM 虚拟机， 该版本自带了 postgresql
+
+
+
+
+
+安装 ubuntu 16.04 服务器版到 VM 虚拟机， 该版本自带了 postgresql ====>没有安装，实际是直接下载windows版的postgresl，安装后执行的
+但是，实际上并不是必须的
 
 
 
