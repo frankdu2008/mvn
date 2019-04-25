@@ -1,4 +1,20 @@
+git - the stupid content tracker
+
 In the beginning, there was no git.
+
+    That would be because Linus Torvalds called it that when he wrote the first version. On the wikipedia page: 
+    (Git - Wikipedia) “Torvalds quipped about the name git (which means unpleasant person in British English slang): 
+    "I'm an egotistical bastard, and I name all my projects after myself. First 'Linux', now 'git'." The man page 
+    describes Git as "the stupid content tracker". The readme file of the source code elaborates further.”
+    The readme file: git/git (update) From the readme file:
+    The name "git" was given by Linus Torvalds when he wrote the very first version. He described the tool as "the 
+    stupid content tracker" and the name as (depending on your mood):
+    • random three-letter combination that is pronounceable, and not actually used by any common UNIX command. The fact 
+    that it is a mispronunciation of "get" may or may not be relevant.
+    • stupid. contemptible and despicable. simple. Take your pick from the dictionary of slang.
+    • "global information tracker": you're in a good mood, and it actually works for you. Angels sing, and a light 
+    suddenly fills the room.
+    • "g**mn idiotic truckload of sh*t": when it breaks
 
 Version Control System
     - Local Version Control System: Each Client has its own version, very difficult to manage, e.g, RCS
