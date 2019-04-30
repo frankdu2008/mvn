@@ -9,6 +9,7 @@
 
   复制C:\psqlODBC\1100\bin 下的 LIBEAY32.dll 和 SSLEAY32.dll 到 C:\Program Files\IDERA\ERStudio Data Architect 18.0 下，
   覆盖掉已经存在的文件即可
+  ========>这个是主要的，如果这么做，会得到 182 error code。
 
 
   配置 Oracle ODBC 驱动
@@ -17,8 +18,9 @@
     - 把这两个文件放到同一个文件夹（务必如此）：Extract Here
         C:\oracleODBC
     - 解压次序很重要！务必先解压 instantclient-basic-windows.x64-12.2.0.1.0， 然后再解压 instantclient-odbc-windows.x64-12.2.0.1.0-2
+      =====>一定要这么做
     - 进入 C:\oracleODBC\instantclient_12_2，双击运行 odbc_install
-    网络上说要配置环境变量，但是貌似不配，也没问题
+    网络上说要配置环境变量，但是貌似不配，也没问题 ====>如果已经安装了 oracle，并配置过 TNS_ADMIN, 就可以不管这步了
     如果要陪的话，配方如下
     
     An ODBC application has to load the Oracle Instant Client ODBC driver's shared library file (see next section) to connect to
