@@ -1,0 +1,23 @@
+Frontend requirement: Angular 2+, Javascript, Typescript, NodeJS
+
+Backend: Java 8, J2EE, Spring, JDBC, JUnit, Spring Boot, Golang, Authorization frameworks(OAuth), SOA, ORM(JPA2, Hibernate)
+         webLogic/JBoss
+
+Database: Postgres/MySQL/Oracle, NoSQL(MongoDB),
+
+Big Data Tools: Hadoop, map reduce,
+
+xml: WSDL, Schema Definition language(xsd), SOAP, JMS
+
+Devops: Could (AWS), Terraform, API Gateway/APIGee Unix, Microservices, Integration with external APIs, load balanceing and 
+        networking, data storage and data streaming
+
+Desired: Pyton, Spark, AWS certification
+
+Infrastructure: Terraform, Cloud, Jenkins, Ansible, Chef/Puppet, Kubernetes, Docker, SonarCube, github,
+
+
+- web application development
+- unix/linux environments
+- distributed systems
+- machine learning
